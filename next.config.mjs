@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
   images: {
@@ -9,7 +10,7 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
   assetPrefix:
     process.env.NODE_ENV === "production" &&
-    process.env.VERCEL_ENV === "production"
+      process.env.VERCEL_ENV === "production"
       ? process.env.NEXT_PUBLIC_BASE_URL
       : undefined,
   async redirects() {
