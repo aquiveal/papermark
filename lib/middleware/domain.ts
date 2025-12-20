@@ -32,7 +32,10 @@ export default async function DomainMiddleware(req: NextRequest) {
       );
     }
 
-    if (host === process.env.NEXT_PUBLIC_BASE_URL) {
+    if (
+      process.env.NEXT_PUBLIC_APP_BASE_HOST &&
+      host === process.env.NEXT_PUBLIC_APP_BASE_HOST
+    ) {
       return NextResponse.redirect(
         new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`, req.url),
       );

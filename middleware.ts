@@ -25,7 +25,8 @@ function isCustomDomain(host: string) {
       (host?.includes(".local") || host?.includes("papermark.dev"))) ||
     (process.env.NODE_ENV !== "development" &&
       !(
-        host?.includes(process.env.NEXT_PUBLIC_BASE_URL) ||
+        (process.env.NEXT_PUBLIC_APP_BASE_HOST &&
+          host?.includes(process.env.NEXT_PUBLIC_APP_BASE_HOST)) ||
         host?.includes("localhost") ||
         host?.includes("papermark.io") ||
         host?.includes("papermark.com") ||
