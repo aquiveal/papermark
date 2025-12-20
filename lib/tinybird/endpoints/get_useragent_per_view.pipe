@@ -1,6 +1,7 @@
-VERSION 3
+
 
 NODE endpoint
+TYPE endpoint
 SQL >
     %
     SELECT
@@ -10,7 +11,7 @@ SQL >
         os,
         device
     FROM
-        pm_click_events__v1
+        pm_click_events
     WHERE
         view_id = {{ String(viewId, required=True) }}
     LIMIT 1

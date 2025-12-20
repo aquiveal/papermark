@@ -1,13 +1,16 @@
-VERSION 4
+
 
 NODE endpoint
+DESCRIPTION >
+    Endpoint for getting page duration per view
+TYPE endpoint
 SQL >
     %
     SELECT
         pageNumber,
         SUM(duration) AS sum_duration
     FROM
-        page_views__v3
+        page_views
     WHERE
         documentId = {{ String(documentId, required=True) }}
         AND viewId = {{ String(viewId, required=True) }}

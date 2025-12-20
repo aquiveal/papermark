@@ -1,9 +1,10 @@
-VERSION 1
+
 
 DESCRIPTION >
     Get total duration and unique countries for all documents in a team
 
 NODE get_duration
+TYPE endpoint
 SQL >
     %
     SELECT

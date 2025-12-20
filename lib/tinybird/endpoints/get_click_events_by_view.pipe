@@ -1,9 +1,10 @@
-VERSION 1
+
 
 DESCRIPTION >
     Get all click events for a specific view
 
 NODE endpoint
+TYPE endpoint
 SQL >
     %
     SELECT
