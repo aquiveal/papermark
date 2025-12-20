@@ -32,6 +32,12 @@ export default async function DomainMiddleware(req: NextRequest) {
       );
     }
 
+    if (host === process.env.NEXT_PUBLIC_BASE_URL) {
+      return NextResponse.redirect(
+        new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`, req.url),
+      );
+    }
+
     return NextResponse.redirect(
       new URL("https://www.papermark.com/home", req.url),
     );
