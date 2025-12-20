@@ -22,12 +22,29 @@ import { generateChecksum } from "@/lib/utils/generate-checksum";
 import { getIpAddress } from "@/lib/utils/ip";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function getMainDomainUrl(): string {
   if (process.env.NODE_ENV === "development") {
     return process.env.NEXTAUTH_URL || "http://localhost:3000";
   }
   return process.env.NEXTAUTH_URL || "https://app.papermark.com";
+}
+
+function getCookieDomain(): string | undefined {
+  if (process.env.NEXTAUTH_URL) {
+    try {
+      const url = new URL(process.env.NEXTAUTH_URL);
+      // For localhost, return undefined
+      if (url.hostname === "localhost") return undefined;
+      if (VERCEL_DEPLOYMENT) return ".papermark.com";
+      
+      return "." + url.hostname; // .papermark.capybaara.com
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
 }
 
 // This function can run for a maximum of 180 seconds
@@ -116,14 +133,14 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
-      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
+      name: `${IS_PRODUCTION ? "__Secure-" : ""}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT ? ".papermark.com" : undefined,
-        secure: VERCEL_DEPLOYMENT,
+        domain: getCookieDomain(),
+        secure: IS_PRODUCTION,
       },
     },
   },
